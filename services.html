@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Services and pricing | Planted by Paisley</title>
+<meta name="description" content="Hourly yard maintenance, garden design, cleanups, and fertilizer care in Boise. Estimate your job before you call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Gloria+Hallelujah&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="meadow" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<header class="wrap top">
+  <a class="mark" href="index.html">Planted by Paisley</a>
+  <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="services.html" aria-current="page">Services &amp; Pricing</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="faq.html">FAQ &amp; Reviews</a>
+  </nav>
+</header>
+
+<section class="wrap page-head">
+  <span class="label eyebrow">Services and pricing</span>
+  <h1>What it costs, before you ask</h1>
+  <p>$35 an hour, flat, with a one hour minimum. No trip fees, no seasonal contracts, and no price that changes after the work is done.</p>
+</section>
+
+<section class="soil" style="margin-top:clamp(2.5rem,6vw,4rem)">
+  <div class="wrap section">
+<div class="tags">
+      <article class="tag">
+        <span class="label cat">One time or recurring</span>
+        <h3>Yard maintenance</h3>
+        <p>Mowing, edging, weeding, pruning, and bed upkeep. Book it once, or set a schedule and I keep the same slot so nothing gets missed.</p>
+      </article>
+
+      <article class="tag">
+        <span class="label cat">Plan and plant list</span>
+        <h3>Garden design</h3>
+        <p>A planting plan drawn for your light, your soil, and how much watering you actually want to do. You get a plant list you can buy from or hand back to me.</p>
+      </article>
+
+      <article class="tag">
+        <span class="label cat">Up to 4 hours a day, or several days</span>
+        <h3>Cleanups and projects</h3>
+        <p>Spring and fall cleanups, overgrown beds, mulch, hauling, new borders. Small jobs fit in an afternoon. Bigger ones I spread across a few days so the work stays careful.</p>
+      </article>
+
+      <article class="tag">
+        <span class="label cat">One time or seasonal</span>
+        <h3>Fertilizer and eco friendly care</h3>
+        <p>Fertilizer spread of any kind, granular or liquid, plus weed and soil treatments. I reach for the eco friendly product first whenever it will actually do the job.</p>
+      </article>
+    </div>
+  </div>
+
+  <!-- ── estimate calculator ────────────────────────────── -->
+  <div class="wrap section" id="estimate" style="padding-top:0">
+    <div class="section-head">
+      <span class="label eyebrow">Ballpark</span>
+      <h2>Get a rough number now</h2>
+      <p>Pick what fits your yard and you will see the range most jobs like it land in. It is an estimate, not a quote. The real number comes after I know what I am looking at.</p>
+    </div>
+
+    <div class="calc">
+      <div class="row">
+        <div class="field">
+          <label for="c-job">What do you need</label>
+          <select id="c-job">
+            <option value="maintenance">Yard maintenance</option>
+            <option value="design">Garden design</option>
+            <option value="cleanup">Cleanup or project</option>
+            <option value="fertilizer">Fertilizer or eco friendly care</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-size">Yard size</label>
+          <select id="c-size">
+            <option value="small">Small, under 1/8 acre</option>
+            <option value="medium" selected>Medium, about 1/4 acre</option>
+            <option value="large">Large, 1/2 acre or more</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" id="c-freq-wrap">
+        <label for="c-freq">How often</label>
+        <select id="c-freq">
+          <option value="1">One time</option>
+          <option value="2">Every two weeks</option>
+          <option value="4">Once a month</option>
+        </select>
+      </div>
+
+      <div class="readout">
+        <span class="label rk">Estimated range</span>
+        <p class="figure" id="c-out">Pick your options above</p>
+        <p class="note" id="c-note"></p>
+      </div>
+
+      <p class="fine">Estimates assume normal access and nothing hiding under the overgrowth. Steep slopes, heavy hauling, and dump fees can move the number. I will tell you before I start, never after.</p>
+      <p class="fine">One hour is my minimum visit. Cancellations need 24 hours notice, and rain sometimes moves things a day.</p>
+      <p class="fine">I work with walk behind equipment. If your property needs a riding or commercial mower, I am glad to rent one, and the rental gets added to your total at cost with no markup. I will always check with you first.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── how it works ─────────────────────────────────────── -->
+<section class="wrap section">
+  <div class="section-head">
+    <span class="label eyebrow" style="color:var(--violet)">How it works</span>
+    <h2>Three steps, and one is optional</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <span class="num">Step 01</span>
+      <h3>Text me a photo</h3>
+      <p>Send a picture of the yard and roughly what you want done. That is usually enough for me to tell you if I am the right fit and what it will run.</p>
+    </div>
+    <div class="step">
+      <span class="num">Step 02, optional</span>
+      <h3>I come look, if you want</h3>
+      <p>Some people want me to walk the yard before they commit, and I am happy to do that for free. Plenty of others skip it and book straight from photos. Your call.</p>
+    </div>
+    <div class="step">
+      <span class="num">Step 03</span>
+      <h3>I get to work</h3>
+      <p>Recurring clients get a standing slot on my schedule. Pay by cash or Venmo when the visit is done. No card fees, no surcharges, no invoice to chase.</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="wrap section">
+  <div class="next">
+    <p>Text me a photo of the yard and I will tell you what it needs and what it costs. No pressure either way.</p>
+    <a class="btn" href="tel:+12085152059" data-phone="text" data-prefix="Text me: ">Text me: (208) 515-2059</a>
+  </div>
+</section>
+
+<div class="meadow" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span class="label">Planted by Paisley &middot; Boise, Idaho</span>
+    <span class="label"><a href="tel:+12085152059" data-phone="text" data-prefix="">(208) 515-2059</a></span>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
