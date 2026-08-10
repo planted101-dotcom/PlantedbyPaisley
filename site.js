@@ -384,6 +384,7 @@
 
       var data = {};
       new FormData(form).forEach(function (v, k) { data[k] = v; });
+      delete data._gotcha; // spam check only, never send it on
 
       if (!data.name.trim() || !data.phone.trim()) {
         say('I need a name and a phone number so I can get back to you.', 'bad');
