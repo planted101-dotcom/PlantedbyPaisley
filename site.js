@@ -160,7 +160,7 @@
     // Pick ONE form service and paste its key. Leave the other blank.
     // web3forms.com  gives you an access key with no account needed.
     // formspree.io   gives you an endpoint that looks like https://formspree.io/f/abcdwxyz
-    web3formsKey: '',
+    web3formsKey: '70a255d9-dae6-42b7-94b5-85ae8e1f1aed',
     formspreeEndpoint: '',
 
     // Your hourly rate, and how many hours a typical job takes.
@@ -171,7 +171,17 @@
       design:      { small: 2.5,  medium: 4.0, large: 6.0 },
       cleanup:     { small: 4.0,  medium: 8.0, large: 14.0 },
       fertilizer:  { small: 0.75, medium: 1.25, large: 2.0 }
-    }
+    },
+
+    // The date picker on the Services page won't let anyone pick a date
+    // sooner than this many days from today.
+    minLeadDays: 2,
+
+    // Paste a Google Calendar "public embed" URL here to show your real
+    // schedule next to the date picker. Leave blank to show the placeholder
+    // message instead. Get this from Google Calendar settings, under
+    // "Integrate calendar" -> "Embed code" -> copy the src="..." URL only.
+    googleCalendarEmbedSrc: 'https://calendar.google.com/calendar/embed?src=df22e6d2f9336f7936d0777d7b94b210cced71048c88994abae3a09b0fc90912%40group.calendar.google.com&ctz=America%2FDenver'
   };
   // ═══════════════════════════════════════════════════════
 
@@ -185,6 +195,136 @@
       el.setAttribute('href', 'mailto:' + SETTINGS.email);
       el.textContent = SETTINGS.email;
     });
+  })();
+
+  // ── date picker on the Services page ──
+  // Real month-by-month calendar math, no external library. Clicking a
+  // date sends the visitor to the home page's contact form with that
+  // date already filled in.
+  (function () {
+    var grid = document.getElementById('picker-grid');
+    if (!grid) return;
+
+    var monthLabel = document.getElementById('picker-month');
+    var prevBtn = document.getElementById('picker-prev');
+    var nextBtn = document.getElementById('picker-next');
+    var status = document.getElementById('picker-status');
+    var continueBtn = document.getElementById('picker-continue');
+
+    var MONTHS = ['January','February','March','April','May','June',
+                   'July','August','September','October','November','December'];
+    var DAY_WORDS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var earliest = new Date(today);
+    earliest.setDate(earliest.getDate() + SETTINGS.minLeadDays);
+
+    var view = new Date(today.getFullYear(), today.getMonth(), 1);
+    var selected = null;
+
+    function sameDay(a, b) {
+      return a && b && a.getFullYear() === b.getFullYear() &&
+             a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    }
+
+    function render() {
+      monthLabel.textContent = MONTHS[view.getMonth()] + ' ' + view.getFullYear();
+      grid.innerHTML = '';
+
+      var firstWeekday = new Date(view.getFullYear(), view.getMonth(), 1).getDay();
+      var daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+
+      for (var b = 0; b < firstWeekday; b++) {
+        var blank = document.createElement('span');
+        blank.className = 'picker-day is-blank';
+        grid.appendChild(blank);
+      }
+
+      for (var d = 1; d <= daysInMonth; d++) {
+        var date = new Date(view.getFullYear(), view.getMonth(), d);
+        var cell = document.createElement('button');
+        cell.type = 'button';
+        cell.className = 'picker-day';
+        cell.textContent = d;
+
+        var tooSoon = date < earliest;
+        if (tooSoon) cell.classList.add('is-disabled');
+        if (sameDay(date, today)) cell.classList.add('is-today');
+        if (sameDay(date, selected)) cell.classList.add('is-selected');
+
+        if (!tooSoon) {
+          cell.addEventListener('click', function (chosenDate) {
+            return function () {
+              selected = chosenDate;
+              render();
+              var label = DAY_WORDS[chosenDate.getDay()] + ', ' +
+                MONTHS[chosenDate.getMonth()] + ' ' + chosenDate.getDate();
+              status.innerHTML = '<p>You picked <strong>' + label +
+                '</strong>. Fill out the request below and I will confirm it or offer a different day.</p>';
+              var iso = chosenDate.getFullYear() + '-' +
+                String(chosenDate.getMonth() + 1).padStart(2, '0') + '-' +
+                String(chosenDate.getDate()).padStart(2, '0');
+              continueBtn.href = 'index.html?date=' + iso + '#contact';
+              continueBtn.textContent = 'Request ' + MONTHS[chosenDate.getMonth()] + ' ' + chosenDate.getDate();
+              continueBtn.classList.add('is-ready');
+            };
+          }(date));
+        }
+
+        grid.appendChild(cell);
+      }
+
+      var isCurrentMonth = view.getFullYear() === today.getFullYear() &&
+                            view.getMonth() === today.getMonth();
+      prevBtn.disabled = isCurrentMonth;
+    }
+
+    prevBtn.addEventListener('click', function () {
+      view.setMonth(view.getMonth() - 1);
+      render();
+    });
+    nextBtn.addEventListener('click', function () {
+      view.setMonth(view.getMonth() + 1);
+      render();
+    });
+
+    render();
+
+    // Show the real calendar if a Google Calendar embed URL is set.
+    var gcalHost = document.getElementById('gcal-embed');
+    if (gcalHost && SETTINGS.googleCalendarEmbedSrc) {
+      gcalHost.innerHTML = '<iframe src="' + SETTINGS.googleCalendarEmbedSrc +
+        '" title="Current schedule"></iframe>';
+    }
+  })();
+
+  // ── carry a picked date over to the contact form ──
+  // If the URL looks like index.html?date=2026-08-15, drop that date
+  // into the quote form's date field and scroll the visitor to it.
+  (function () {
+    var dateField = document.getElementById('q-date');
+    if (!dateField) return;
+
+    var params = new URLSearchParams(window.location.search);
+    var picked = params.get('date');
+    if (!picked) return;
+
+    var parts = picked.split('-');
+    if (parts.length === 3) {
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      var MONTHS = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+      dateField.value = MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+
+    var form = document.getElementById('quote');
+    if (form) {
+      window.setTimeout(function () {
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        dateField.focus();
+      }, 300);
+    }
   })();
 
   // Estimate calculator.

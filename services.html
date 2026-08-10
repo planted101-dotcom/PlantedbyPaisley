@@ -138,6 +138,50 @@
   </div>
 </section>
 
+<!-- ── pick a date ──────────────────────────────────────── -->
+<section class="soil">
+  <div class="wrap section">
+    <div class="section-head">
+      <span class="label eyebrow">Pick a date</span>
+      <h2>See what's open, send a request</h2>
+      <p>Pick a day that works and I'll confirm it or text you back with a different time. This isn't an instant booking, it's a heads up for both of us.</p>
+    </div>
+
+    <div class="picker-wrap">
+      <div class="picker" id="datepicker">
+        <div class="picker-head">
+          <button type="button" class="picker-nav" id="picker-prev" aria-label="Previous month">&larr;</button>
+          <span class="picker-month" id="picker-month">Month Year</span>
+          <button type="button" class="picker-nav" id="picker-next" aria-label="Next month">&rarr;</button>
+        </div>
+        <div class="picker-dow">
+          <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+        </div>
+        <div class="picker-grid" id="picker-grid"></div>
+        <div class="picker-legend">
+          <span><i class="picker-dot" style="background:var(--violet)"></i> Selected</span>
+          <span><i class="picker-dot" style="background:var(--sky)"></i> Today</span>
+          <span><i class="picker-dot" style="background:var(--tag);border:1px solid rgba(42,42,77,.25)"></i> Open</span>
+        </div>
+      </div>
+
+      <div class="picker-side">
+        <div class="picker-status" id="picker-status">
+          <p>No date selected yet. I'm usually booking about two weeks out, but text me if you need something sooner, sometimes I have room.</p>
+        </div>
+        <a class="btn light" id="picker-continue" href="index.html#contact">Request this date</a>
+
+        <div class="calendar-embed">
+          <p class="label" style="margin-bottom:.6rem">My current schedule</p>
+          <div id="gcal-embed">
+            <!-- SETTINGS: paste a Google Calendar embed URL below to show real availability -->
+            <p class="calendar-placeholder">Calendar preview coming soon. Text me and I'll confirm what's open.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="wrap section">
   <div class="next">
