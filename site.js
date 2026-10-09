@@ -181,9 +181,79 @@
     // schedule next to the date picker. Leave blank to show the placeholder
     // message instead. Get this from Google Calendar settings, under
     // "Integrate calendar" -> "Embed code" -> copy the src="..." URL only.
-    googleCalendarEmbedSrc: 'https://calendar.google.com/calendar/embed?src=df22e6d2f9336f7936d0777d7b94b210cced71048c88994abae3a09b0fc90912%40group.calendar.google.com&ctz=America%2FDenver'
+    googleCalendarEmbedSrc: 'https://calendar.google.com/calendar/embed?src=df22e6d2f9336f7936d0777d7b94b210cced71048c88994abae3a09b0fc90912%40group.calendar.google.com&ctz=America%2FDenver',
+
+    // Falling leaves for fall.
+    //   'auto'  shows them September through November, hides them the rest of the year
+    //   true    always on
+    //   false   always off
+    fallLeaves: 'auto',
+    // How many leaves on screen at once (phones get about half).
+    fallLeafCount: 14
   };
   // ═══════════════════════════════════════════════════════
+
+  // ── falling leaves ──
+  // A layer that sits over the page but never blocks clicks. Each leaf
+  // falls on one animation and sways side to side on another, so the
+  // two motions combine into a drifting path. Skipped for anyone who has
+  // asked their device for reduced motion.
+  (function () {
+    var on = SETTINGS.fallLeaves;
+    if (on === 'auto') {
+      var m = new Date().getMonth(); // 8 = September, 10 = November
+      on = m >= 8 && m <= 10;
+    }
+    if (!on) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var COLORS = ['#E39B4B', '#D9733F', '#C9573A', '#E9C35A', '#E88AAE', '#B8743A'];
+    // two leaf shapes: a rounded oval leaf and a pointed one, each with a midrib
+    var SHAPES = [
+      'M12 1C5 6 3 13 6 19c2 3 4 4 6 4s4-1 6-4c3-6 1-13-6-18z',
+      'M12 1C7 4 2 9 3 15c1 4 5 7 9 8 4-1 8-4 9-8 1-6-4-11-9-14z'
+    ];
+
+    var layer = document.createElement('div');
+    layer.className = 'leaf-fall';
+    layer.setAttribute('aria-hidden', 'true');
+
+    var count = window.innerWidth < 620 ? Math.ceil(SETTINGS.fallLeafCount / 2) : SETTINGS.fallLeafCount;
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    for (var i = 0; i < count; i++) {
+      var leaf = document.createElement('span');
+      leaf.className = 'fall-leaf';
+      var size = rand(16, 30);
+      var fall = rand(11, 20);
+      leaf.style.left = rand(0, 100) + 'vw';
+      leaf.style.width = leaf.style.height = size + 'px';
+      leaf.style.animationDuration = fall + 's';
+      // negative delay so some leaves are already partway down on load
+      leaf.style.animationDelay = (-rand(0, fall)) + 's';
+
+      var sway = document.createElement('span');
+      sway.className = 'fall-sway';
+      sway.style.setProperty('--drift', rand(30, 90) + 'px');
+      sway.style.setProperty('--spin', rand(140, 320) * (Math.random() < .5 ? -1 : 1) + 'deg');
+      sway.style.animationDuration = rand(2.6, 4.4) + 's';
+      sway.style.animationDelay = (-rand(0, 4)) + 's';
+
+      var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      var path = SHAPES[i % SHAPES.length];
+      sway.innerHTML =
+        '<svg viewBox="0 0 24 24" width="100%" height="100%">' +
+          '<path d="' + path + '" fill="' + color + '"/>' +
+          '<path d="M12 3v20" stroke="rgba(60,30,10,.35)" stroke-width="1" fill="none"/>' +
+        '</svg>';
+
+      leaf.appendChild(sway);
+      layer.appendChild(leaf);
+    }
+
+    document.body.appendChild(layer);
+  })();
 
   // Push the phone number and email everywhere they appear.
   (function () {
@@ -261,7 +331,7 @@
               var label = DAY_WORDS[chosenDate.getDay()] + ', ' +
                 MONTHS[chosenDate.getMonth()] + ' ' + chosenDate.getDate();
               status.innerHTML = '<p>You picked <strong>' + label +
-                '</strong>. Fill out the request below and I will confirm it or offer a different day.</p>';
+                '</strong>. Tap the button below to fill out the form, and I\'ll confirm that day or suggest another one.</p>';
               var iso = chosenDate.getFullYear() + '-' +
                 String(chosenDate.getMonth() + 1).padStart(2, '0') + '-' +
                 String(chosenDate.getDate()).padStart(2, '0');
@@ -349,15 +419,15 @@
 
       var per = recurring && freq.value !== '1' ? ' per visit' : '';
       var txt = 'About ' + h + (h === 1 ? ' hour' : ' hours') + ' of work' + per + '.';
-      if (h === 1) txt += ' One hour is my minimum visit.';
+      if (h === 1) txt += ' One hour is my minimum.';
 
       if (recurring && freq.value !== '1') {
         var visits = freq.value === '2' ? 2.2 : 1;
-        txt += ' Roughly ' + money(mid * visits * 0.85) + ' to ' +
+        txt += ' That\'s roughly ' + money(mid * visits * 0.85) + ' to ' +
                money(mid * visits * 1.2) + ' a month.';
       }
       if (job.value === 'cleanup' && h > 4) {
-        txt += ' I would split this across ' + Math.ceil(h / 4) + ' days.';
+        txt += ' I\'d split this into ' + Math.ceil(h / 4) + ' days.';
       }
       note.textContent = txt;
     }
@@ -387,7 +457,7 @@
       delete data._gotcha; // spam check only, never send it on
 
       if (!data.name.trim() || !data.phone.trim()) {
-        say('I need a name and a phone number so I can get back to you.', 'bad');
+        say('Please add your name and phone number so I can get back to you.', 'bad');
         return;
       }
 
@@ -401,12 +471,12 @@
         url = SETTINGS.formspreeEndpoint;
         payload = data;
       } else {
-        say('The form is not connected yet. Text me at ' + SETTINGS.phoneShown + ' and I will get right back to you.', 'bad');
+        say('The form isn\'t working right now. Please text me at ' + SETTINGS.phoneShown + ' instead.', 'bad');
         return;
       }
 
       submit.disabled = true;
-      say('Sending.');
+      say('Sending...');
 
       fetch(url, {
         method: 'POST',
@@ -415,11 +485,35 @@
       }).then(function (res) {
         if (!res.ok) throw new Error('bad response');
         form.reset();
-        say('Got it. I will text you back within a day.', 'ok');
+        say('Thanks! I got your request and will text you back within a day.', 'ok');
       }).catch(function () {
-        say('That did not go through. Text me at ' + SETTINGS.phoneShown + ' instead.', 'bad');
+        say('Something went wrong. Please text me at ' + SETTINGS.phoneShown + ' instead.', 'bad');
       }).then(function () {
         submit.disabled = false;
       });
+    });
+  })();
+
+  // "Text this to me instead" button. Opens the visitor's own messaging app
+  // with their form answers already typed into a text to Paisley.
+  (function () {
+    var btn = document.getElementById('text-instead');
+    var form = document.getElementById('quote');
+    if (!btn || !form) return;
+
+    btn.addEventListener('click', function () {
+      function val(name) {
+        var el = form.querySelector('[name=' + name + ']');
+        return el && el.value.trim() ? el.value.trim() : '';
+      }
+      var lines = ['Hi Paisley, I\'d like an estimate.'];
+      if (val('name')) lines.push('Name: ' + val('name'));
+      if (val('area')) lines.push('Area: ' + val('area'));
+      if (val('service')) lines.push('Service: ' + val('service'));
+      if (val('date')) lines.push('Preferred date: ' + val('date'));
+      if (val('details')) lines.push('Details: ' + val('details'));
+      // "?&body=" works on both iPhone and Android
+      window.location.href = 'sms:' + SETTINGS.phoneDigits + '?&body=' +
+        encodeURIComponent(lines.join('\n'));
     });
   })();

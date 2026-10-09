@@ -41,9 +41,9 @@
     background:var(--mineral);
     color:var(--ink);
     font-family:var(--body);
-    font-size:clamp(1.02rem,0.97rem + 0.28vw,1.16rem);
-    line-height:1.62;
-    font-weight:350;
+    font-size:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
+    line-height:1.65;
+    font-weight:400;
   }
   img,svg{display:block;max-width:100%}
   a{color:inherit}
@@ -61,8 +61,8 @@
 
   .label{
     font-family:var(--label);
-    font-size:.66rem;
-    letter-spacing:.16em;
+    font-size:.85rem;
+    letter-spacing:.1em;
     text-transform:uppercase;
     line-height:1.5;
   }
@@ -89,6 +89,33 @@
   .meadow span:nth-child(9){background:var(--gold-deep)}
   .meadow span:nth-child(10){background:var(--blush)}
 
+  /* ── work in progress banner ────────────────────────────── */
+  .wip{background:var(--gold);color:var(--soil-deep)}
+  .wip-inner{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:.3rem .8rem;
+    padding-block:.6rem;
+  }
+  .wip-tag{
+    font-family:var(--label);
+    font-size:.85rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    background:var(--soil-deep);
+    color:var(--gold);
+    padding:.25rem .55rem;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .wip-inner p{
+    margin:0;
+    font-size:1rem;
+    line-height:1.45;
+  }
+  .wip-inner a{color:var(--soil-deep);text-decoration:underline}
+
   /* ── header ─────────────────────────────────────────────── */
   .top{
     display:flex;
@@ -100,16 +127,37 @@
   }
   .top .mark{
     text-decoration:none;
-    font-family:var(--hand);
-    font-weight:400;
-    font-size:1.15rem;
-    color:var(--violet);
-    letter-spacing:0;
+    display:inline-flex;
+    align-items:center;
+  }
+  .logo-img{
+    display:block;
+    height:clamp(52px,8vw,68px);
+    width:auto;
+  }
+  .hero-logo{
+    display:block;
+    height:clamp(150px,26vw,260px);
+    width:auto;
+  }
+  .hero-top{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:clamp(1.5rem,4vw,3rem);
+  }
+  .hero-top > div{flex:1 1 260px}
+  .hero-top .lede{
+    margin:0;
+  }
+  .hero .actions{
+    justify-content:center;
+    text-align:center;
+    margin-top:clamp(2rem,5vw,3rem);
   }
 
-
   /* ── hero ───────────────────────────────────────────────── */
-  .hero{padding-block:clamp(2.5rem,7vw,5.5rem) 0}
+  .hero{padding-block:clamp(1.2rem,3vw,2.4rem) 0}
   .hero .eyebrow{
     color:var(--violet);
     margin-bottom:1.6rem;
@@ -168,10 +216,10 @@
     display:inline-block;
     font-family:var(--display);
     font-weight:700;
-    font-size:1.02rem;
+    font-size:1.12rem;
     letter-spacing:-.01em;
     text-decoration:none;
-    padding:.95rem 1.6rem;
+    padding:1rem 1.7rem;
     border-radius:999px;
     background:var(--violet);
     color:#FFFFFF;
@@ -180,12 +228,24 @@
   }
   .btn:hover{background:var(--clover);border-color:var(--clover);transform:translateY(-2px)}
   .btn.light{background:var(--gold);border-color:var(--gold);color:var(--soil-deep)}
+  .btn.outline{
+    background:transparent;
+    border-color:rgba(251,252,244,.5);
+    color:var(--mineral);
+  }
+  .btn.outline:hover{background:rgba(251,252,244,.12);border-color:var(--mineral)}
+  .form-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.9rem 1rem;
+    align-items:center;
+  }
   .btn.light:hover{background:#FFFFFF;border-color:#FFFFFF;color:var(--soil-deep)}
 
   .quiet-link{
     font-family:var(--label);
-    font-size:.72rem;
-    letter-spacing:.14em;
+    font-size:.9rem;
+    letter-spacing:.1em;
     text-transform:uppercase;
     text-decoration:none;
     border-bottom:2px solid var(--violet);
@@ -279,7 +339,7 @@
   .section-head{max-width:44ch;margin-bottom:clamp(2.2rem,5vw,3.4rem)}
   .section-head .eyebrow{margin-bottom:1rem;display:block}
   .section-head h2{font-size:clamp(2rem,1.4rem + 2.6vw,3.4rem)}
-  .section-head p{margin:1.1rem 0 0;opacity:.82}
+  .section-head p{margin:1.1rem 0 0;opacity:.92}
 
   /* ── plant tags ─────────────────────────────────────────── */
   .tags{
@@ -330,7 +390,7 @@
     letter-spacing:-.02em;
     margin-bottom:.7rem;
   }
-  .tag p{margin:0;font-size:.99rem;line-height:1.55;color:var(--ink-soft)}
+  .tag p{margin:0;font-size:1.08rem;line-height:1.55;color:var(--ink-soft)}
 
   /* ── steps: a real sequence, so it gets numbers ─────────── */
   .steps{
@@ -342,14 +402,14 @@
   }
   .step .num{
     font-family:var(--label);
-    font-size:.72rem;
-    letter-spacing:.16em;
+    font-size:.88rem;
+    letter-spacing:.1em;
     color:var(--violet);
     display:block;
     margin-bottom:.85rem;
   }
   .step h3{font-size:1.28rem;margin-bottom:.5rem}
-  .step p{margin:0;color:var(--ink-soft);font-size:1rem}
+  .step p{margin:0;color:var(--ink-soft);font-size:1.08rem}
 
   /* ── date picker ─────────────────────────────────────────── */
   .picker-wrap{
@@ -376,11 +436,11 @@
   .picker-month{
     font-family:var(--display);
     font-weight:700;
-    font-size:1.05rem;
+    font-size:1.2rem;
     letter-spacing:-.01em;
   }
   .picker-nav{
-    width:32px;height:32px;
+    width:40px;height:40px;
     border-radius:50%;
     border:1px solid rgba(42,42,77,.18);
     background:transparent;
@@ -396,8 +456,8 @@
     grid-template-columns:repeat(7,1fr);
     text-align:center;
     font-family:var(--label);
-    font-size:.62rem;
-    letter-spacing:.08em;
+    font-size:.85rem;
+    letter-spacing:.06em;
     color:var(--ink-soft);
     margin-bottom:.3rem;
   }
@@ -415,7 +475,7 @@
     border:1px solid rgba(42,42,77,.16);
     background:var(--mineral);
     font-family:var(--body);
-    font-size:.92rem;
+    font-size:1.08rem;
     color:var(--ink);
     cursor:pointer;
     transition:background .15s ease,color .15s ease,border-color .15s ease;
@@ -425,7 +485,7 @@
   }
   .picker-day.is-blank{visibility:hidden;cursor:default}
   .picker-day.is-disabled{
-    color:rgba(42,42,77,.28);
+    color:rgba(42,42,77,.4);
     background:transparent;
     border-color:transparent;
     cursor:default;
@@ -442,8 +502,8 @@
     gap:.5rem 1rem;
     margin-top:1rem;
     font-family:var(--label);
-    font-size:.62rem;
-    letter-spacing:.06em;
+    font-size:.85rem;
+    letter-spacing:.04em;
     color:var(--ink-soft);
   }
   .picker-legend span{display:inline-flex;align-items:center;gap:.4rem}
@@ -457,7 +517,7 @@
     padding:1rem 1.1rem;
     margin-bottom:1.1rem;
   }
-  .picker-status p{margin:0;font-size:.98rem;line-height:1.55;opacity:.9}
+  .picker-status p{margin:0;font-size:1.08rem;line-height:1.55}
   #picker-continue{
     display:inline-block;
     opacity:.5;
@@ -473,15 +533,15 @@
     background:rgba(251,252,244,.06);
     border:1px dashed rgba(251,252,244,.25);
     border-radius:6px;
-    font-size:.92rem;
-    color:rgba(251,252,244,.7);
+    font-size:1.05rem;
+    color:rgba(251,252,244,.85);
   }
 
   .field .opt{
     font-weight:400;
     text-transform:none;
     letter-spacing:0;
-    color:rgba(251,252,244,.5);
+    color:rgba(251,252,244,.75);
   }
 
   /* ── faq ────────────────────────────────────────────────── */
@@ -496,8 +556,8 @@
   .qa:nth-child(4){border-top-color:var(--lilac)}
   .qa:nth-child(5){border-top-color:var(--gold-deep)}
   .qa:nth-child(6){border-top-color:var(--rose)}
-  .qa h3{font-size:1.18rem;margin-bottom:.45rem}
-  .qa p{margin:0;color:var(--ink-soft);font-size:1rem;line-height:1.55}
+  .qa h3{font-size:1.3rem;margin-bottom:.5rem}
+  .qa p{margin:0;color:var(--ink-soft);font-size:1.08rem;line-height:1.6}
 
   /* ── about ──────────────────────────────────────────────── */
   .about{
@@ -521,7 +581,7 @@
     font-size:clamp(2.1rem,1.4rem + 3vw,3.8rem);
     max-width:16ch;
   }
-  .contact .lede{margin:1.2rem 0 2.2rem;max-width:36ch;opacity:.85}
+  .contact .lede{margin:1.2rem 0 2.2rem;max-width:36ch;opacity:.95}
   .contact-grid{
     display:grid;
     gap:2.4rem;
@@ -541,7 +601,7 @@
 
   footer{
     background:var(--soil-deep);
-    color:rgba(231,232,224,.6);
+    color:rgba(231,232,224,.85);
     border-top:1px solid rgba(231,232,224,.14);
   }
   footer .wrap{
@@ -600,8 +660,8 @@
     color:#FFFFFF;
     padding:.3rem .6rem;
     font-family:var(--label);
-    font-size:.6rem;
-    letter-spacing:.16em;
+    font-size:.88rem;
+    letter-spacing:.1em;
     text-transform:uppercase;
   }
   .shot.is-before .stamp{background:var(--blush);color:var(--soil-deep)}
@@ -612,26 +672,26 @@
     z-index:2;
     cursor:pointer;
     font-family:var(--label);
-    font-size:.62rem;
-    letter-spacing:.14em;
+    font-size:.85rem;
+    letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--soil-deep);
     background:var(--mineral);
     border:none;
-    padding:.5rem .8rem;
+    padding:.6rem .9rem;
     transition:background .18s ease,color .18s ease;
   }
   .shot .flip:hover{background:var(--clover);color:var(--mineral)}
   .shot figcaption{
     margin-top:.9rem;
-    font-size:.98rem;
-    color:rgba(231,232,224,.72);
+    font-size:1.08rem;
+    color:rgba(231,232,224,.88);
   }
   .shot figcaption strong{
     display:block;
     font-family:var(--display);
     font-weight:700;
-    font-size:1.1rem;
+    font-size:1.25rem;
     color:var(--mineral);
     letter-spacing:-.015em;
     margin-bottom:.15rem;
@@ -661,13 +721,13 @@
   }
   .readout .note{
     margin:.6rem 0 0;
-    color:rgba(231,232,224,.72);
-    font-size:.98rem;
+    color:rgba(231,232,224,.9);
+    font-size:1.08rem;
   }
   .calc .fine{
     margin:1.4rem 0 0;
-    font-size:.9rem;
-    color:rgba(231,232,224,.55);
+    font-size:1rem;
+    color:rgba(231,232,224,.82);
   }
 
   /* ── quote form ─────────────────────────────────────────── */
@@ -680,8 +740,8 @@
   .field label{
     display:block;
     font-family:var(--label);
-    font-size:.66rem;
-    letter-spacing:.16em;
+    font-size:.85rem;
+    letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--gold);
     margin-bottom:.45rem;
@@ -691,7 +751,7 @@
   .field textarea{
     width:100%;
     font-family:var(--body);
-    font-size:1rem;
+    font-size:1.1rem;
     color:var(--mineral);
     background:rgba(21,29,24,.6);
     border:1px solid rgba(231,232,224,.24);
@@ -706,7 +766,7 @@
   .field select:focus,
   .field textarea:focus{border-color:var(--gold)}
   .field input::placeholder,
-  .field textarea::placeholder{color:rgba(231,232,224,.38)}
+  .field textarea::placeholder{color:rgba(231,232,224,.6)}
   .row{display:grid;gap:1.2rem;grid-template-columns:minmax(0,1fr)}
   @media(min-width:560px){.row{grid-template-columns:1fr 1fr}}
   .row .field{margin-bottom:1.2rem}
@@ -715,16 +775,54 @@
   .form button[type=submit][disabled]{opacity:.6;cursor:progress}
   .status{
     margin:1rem 0 0;
-    font-size:.98rem;
+    font-size:1.08rem;
     min-height:1.5rem;
   }
   .status.ok{color:var(--meadow)}
   .status.bad{color:#E8A0A0}
   .form .fine{
     margin:1.4rem 0 0;
-    font-size:.9rem;
-    color:rgba(231,232,224,.55);
+    font-size:1rem;
+    color:rgba(231,232,224,.82);
   }
+
+  /* ── falling leaves (built in site.js, fall only) ──────── */
+  .leaf-fall{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .fall-leaf{
+    position:absolute;
+    top:-40px;
+    display:block;
+    opacity:.85;
+    animation-name:leaf-drop;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+    will-change:transform;
+  }
+  .fall-sway{
+    display:block;
+    width:100%;
+    height:100%;
+    animation-name:leaf-sway;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+    animation-direction:alternate;
+  }
+  .fall-sway svg{display:block}
+  @keyframes leaf-drop{
+    from{transform:translateY(0)}
+    to{transform:translateY(calc(100vh + 80px))}
+  }
+  @keyframes leaf-sway{
+    from{transform:translateX(calc(var(--drift) * -1)) rotate(0deg)}
+    to{transform:translateX(var(--drift)) rotate(var(--spin))}
+  }
+  @media print{.leaf-fall{display:none}}
 
   @media(prefers-reduced-motion:reduce){
     *{animation:none !important;transition:none !important}
@@ -747,8 +845,8 @@
   }
   .nav a{
     font-family:var(--label);
-    font-size:.68rem;
-    letter-spacing:.14em;
+    font-size:.88rem;
+    letter-spacing:.08em;
     text-transform:uppercase;
     text-decoration:none;
     color:var(--ink-soft);
@@ -767,7 +865,7 @@
   .nav a:nth-child(4){--accent:var(--gold-deep)}
 
   /* ── page headers on inner pages ────────────────────────── */
-  .page-head{padding-block:clamp(2.4rem,6vw,4.2rem) 0}
+  .page-head{padding-block:clamp(1rem,2.5vw,1.8rem) 0}
   .page-head .eyebrow{color:var(--violet);display:block;margin-bottom:1rem}
   .page-head h1{
     color:var(--violet);
@@ -798,13 +896,13 @@
   .reviews .review:nth-child(4){--band:var(--lilac)}
   .reviews .review:nth-child(5){--band:var(--gold-deep)}
   .reviews .review:nth-child(6){--band:var(--rose)}
-  .review p{margin:0;font-size:1.02rem;line-height:1.6}
+  .review p{margin:0;font-size:1.1rem;line-height:1.6}
   .review .who{
     display:block;
     margin-top:1rem;
     font-family:var(--label);
-    font-size:.66rem;
-    letter-spacing:.14em;
+    font-size:.85rem;
+    letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--ink-soft);
   }
@@ -820,15 +918,15 @@
     padding:1.3rem 1.4rem;
     margin-top:clamp(2rem,5vw,3rem);
   }
-  .notice h3{font-size:1.1rem;margin-bottom:.4rem}
-  .notice p{margin:0;font-size:1rem;color:var(--ink-soft);line-height:1.55}
+  .notice h3{font-size:1.25rem;margin-bottom:.45rem}
+  .notice p{margin:0;font-size:1.08rem;color:var(--ink-soft);line-height:1.6}
   .form .notice{
     background:rgba(243,174,202,.08);
     border-color:rgba(243,174,202,.4);
     border-left-color:var(--rose);
     margin:0 0 1.3rem;
   }
-  .form .notice p{color:rgba(253,251,244,.8)}
+  .form .notice p{color:rgba(253,251,244,.9)}
   .form .notice h3{color:var(--mineral)}
 
   /* ── cross links between pages ──────────────────────────── */
@@ -853,4 +951,41 @@
   .cta-center{
     text-align:center;
     margin:clamp(2.2rem,5vw,3.4rem) 0 0;
+  }
+
+  /* ── phone link in the header ───────────────────────────── */
+  .nav a.head-phone{
+    font-family:var(--display);
+    font-size:1rem;
+    font-weight:700;
+    letter-spacing:0;
+    text-transform:none;
+    color:#FFFFFF;
+    background:var(--violet);
+    border:0;
+    border-radius:999px;
+    padding:.5rem 1rem;
+  }
+  .nav a.head-phone:hover{background:var(--clover);color:#FFFFFF}
+
+  /* ── fall note in the hero ──────────────────────────────── */
+  .season-note{
+    display:inline-block;
+    margin:1.6rem 0 0;
+    padding:.45rem .9rem;
+    background:#FBE3CC;
+    color:#7A3A12;
+    border-radius:999px;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:1rem;
+  }
+
+  /* ── stars on reviews ───────────────────────────────────── */
+  .review .stars{
+    display:block;
+    color:#D99A12;
+    font-size:1.2rem;
+    letter-spacing:.12em;
+    margin-bottom:.6rem;
   }
